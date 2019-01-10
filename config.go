@@ -22,18 +22,18 @@ import "time"
 // Config contains the configuration options for the logger. To create a Config
 // from a common.Config use logp/config.Build.
 type Config struct {
-	JSON      bool     `mapstructure:"json"`      // Write logs as JSON.
-	Level     Level    `mapstructure:"level"`     // Logging level (error, warning, info, debug).
-	Selectors []string `mapstructure:"selectors"` // Selectors for debug level logging.
+	JSON      bool     `mapstructure:"json" json:"json"`           // Write logs as JSON.
+	Level     Level    `mapstructure:"level" json:"level"`         // Logging level (error, warning, info, debug).
+	Selectors []string `mapstructure:"selectors" json:"selectors"` // Selectors for debug level logging.
 
 	toObserver  bool
 	toIODiscard bool
-	ToStderr    bool `mapstructure:"to_stderr"`
-	ToSyslog    bool `mapstructure:"to_syslog"`
-	ToFiles     bool `mapstructure:"to_files"`
-	ToEventLog  bool `mapstructure:"to_eventlog"`
+	ToStderr    bool `mapstructure:"to_stderr" json:"to_stderr"`
+	ToSyslog    bool `mapstructure:"to_syslog" json:"to_syslog"`
+	ToFiles     bool `mapstructure:"to_files" json:"to_files"`
+	ToEventLog  bool `mapstructure:"to_eventlog" json:"to_event_log"`
 
-	Files FileConfig `mapstructure:"files"`
+	Files FileConfig `mapstructure:"files" json:"files"`
 
 	addCaller   bool // Adds package and line number info to messages.
 	development bool // Controls how DPanic behaves.
@@ -41,12 +41,12 @@ type Config struct {
 
 // FileConfig contains the configuration options for the file output.
 type FileConfig struct {
-	Path        string        `mapstructure:"path"`
-	Name        string        `mapstructure:"name"`
-	MaxSize     uint          `mapstructure:"rotateeverybytes" validate:"min=1"`
-	MaxBackups  uint          `mapstructure:"keepfiles" validate:"max=1024"`
-	Permissions uint32        `mapstructure:"permissions"`
-	Interval    time.Duration `mapstructure:"interval"`
+	Path        string        `mapstructure:"path" json:"path"`
+	Name        string        `mapstructure:"name" json:"name"`
+	MaxSize     uint          `mapstructure:"rotateeverybytes" validate:"min=1" json:"max_size"`
+	MaxBackups  uint          `mapstructure:"keepfiles" validate:"max=1024" json:"max_backups"`
+	Permissions uint32        `mapstructure:"permissions" json:"permissions"`
+	Interval    time.Duration `mapstructure:"interval" json:"interval"`
 }
 
 var defaultConfig = Config{
